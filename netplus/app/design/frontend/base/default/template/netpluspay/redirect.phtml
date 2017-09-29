@@ -1,0 +1,32 @@
+<?php
+// Retrieve order
+$_order = new Mage_Sales_Model_Order();
+$orderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
+$_order->loadByIncrementId($orderId);
+$getEmail = Mage::getSingleton('customer/session')->getCustomer()->getEmail();
+$getName = $_order->getCustomerName();
+$mercId = Mage::getStoreConfig('payment/netpluspay/test_merchant_id');
+$currCode = Mage::getStoreConfig('payment/netpluspay/currency_code');
+$return_url = Mage::getUrl('netpluspay/payment/response');
+$env = Mage::getStoreConfig('payment/netpluspay/environment');
+$url = "https://netpluspay.com/testpayment/paysrc/";
+if ($env) {
+    $mercId = Mage::getStoreConfig('payment/netpluspay/merchant_id');
+    $url = "https://netpluspay.com/payment/paysrc/";
+}
+?>
+<p>Redirecting to Netpluspay...</p>
+<form name="cipgpaymentform" method="post" action="<?php echo $url; ?>">
+    <input type="hidden" name="full_name" value="<?php echo $getName; ?>">
+    <input type="hidden" name="total_amount" value="<?php echo $_order->getGrandTotal(); ?>">
+    <input type="hidden" name="narration" value="New Order">
+    <input type="hidden" name="email"
+           value="<?php if (!empty($getEmail)) echo Mage::getSingleton('customer/session')->getCustomer()->getEmail(); else echo $_order->getCustomerEmail(); ?>">
+    <input type="hidden" name="merchant_id" value="<?php echo $mercId; ?>">
+    <input type="hidden" name="order_id" value="<?php echo $orderId; ?>">
+    <input type="hidden" name="return_url" value="<?php echo $return_url; ?>">
+    <input type="hidden" name="currency_code" value="<?php echo $_order->getOrderCurrencyCode(); ?>">
+</form>
+<script type="text/javascript">
+    document.cipgpaymentform.submit();
+</script>

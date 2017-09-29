@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+       <Netplus_Netpluspay>
+<!-- declare module's version information for database updates -->
+          <version>0.1.0</version>
+       </Netplus_Netpluspay>
+    </modules>
+ 
+    <global>
+<!-- IMPORTANT: if you use your own namespace (i.e. CompanyName) you also have to declare blocks group for new module. See topic: http://www.magentocommerce.com/boards/viewthread/22416/#t102732 -->
+    <blocks>
+        <netpluspay>
+            <class>Netplus_Netpluspay_Block</class>
+        </netpluspay>
+    </blocks>
+ 
+<!-- declare model group for new module -->
+        <models>
+<!-- model group alias to be used in Mage::getModel('newmodule/...') -->
+            <netpluspay>
+<!-- base class name for the model group -->
+                <class>Netplus_Netpluspay_Model</class>
+            </netpluspay>
+        </models>
+        <helpers>
+            <netpluspay>
+                <class>Netplus_Netpluspay_Helper</class>
+            </netpluspay>
+        </helpers>
+<!-- declare resource setup for new module -->
+        <resources>
+<!-- resource identifier -->
+            <netpluspay_setup>
+<!-- specify that this resource is a setup resource and used for upgrades -->
+                <setup>
+<!-- which module to look for install/upgrade files in -->
+                    <module>Netplus_Netpluspay</module>
+                </setup>
+<!-- specify database connection for this resource -->
+                <connection>
+<!-- do not create new connection, use predefined core setup connection -->
+                    <use>core_setup</use>
+                </connection>
+            </netpluspay_setup>
+            <netpluspay_write>
+                <connection>
+                  <use>core_write</use>
+                </connection>
+            </netpluspay_write>
+            <netpluspay_read>
+               <connection>
+                <use>core_read</use>
+              </connection>
+            </netpluspay_read>
+        </resources>
+    </global>
+ 
+    <frontend>
+        <routers>
+            <Netplus_Netpluspay>
+                <use>standard</use>
+                <args>
+                    <module>Netplus_Netpluspay</module>
+                    <frontName>netpluspay</frontName>
+                </args>
+            </Netplus_Netpluspay>
+        </routers>
+    </frontend>
+
+<!-- declare default configuration values for this module -->
+    <default>
+<!-- 'payment' configuration section (tab) -->
+        <payment>
+<!-- 'newmodule' configuration group (fieldset) -->
+            <netpluspay>
+<!-- by default this payment method is inactive -->
+                <active>0</active>
+<!-- model to handle logic for this payment method -->
+                <model>netpluspay/paymentMethod</model>
+<!-- order status for new orders paid by this payment method -->
+                <order_status>pending</order_status>
+<!-- default title for payment checkout page and order view page -->
+                <title>Credit/Debit Cards (Netpluspay)</title>
+ 
+                <payment_action>authorize</payment_action>
+            </netpluspay>
+         </payment>
+    </default>
+</config>

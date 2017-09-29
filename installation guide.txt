@@ -1,0 +1,19 @@
+To install the module please do the following:
+
+1) copy files from  folder to the respective magento folder 
+	- netplus/app/code/community/Netplus  to  magento folder/app/code/community/
+	- netplus/app/design/frontend/base/default/template/netpluspay  to  magento folder/app/design/frontend/base/default/template/
+	- netplus/app/etc/modules/  to  magento folder/app/etc/modules/
+
+2) log in as admin and refresh the cache (System > Cache Management)
+
+3) log off and log in back, this prevents 404 error for the module configuration
+
+4) Go into your admin area and enable the payment option. System -> Configuarion -> Payment Methods - > Netpluspay.
+
+and Set Merchant Id, Set Production to yes (when ready to launch product). 
+
+
+
+
+----- Installation is now complete--------------------------
